@@ -8,7 +8,7 @@
 #define BUFFER_SIZE 128
 #define PROC_NAME "hello"
 
-ssize t proc read(struct file *file, char __user *usr_buf,
+ssize_t proc_read(struct file *file, char __user *usr_buf,
        size_t count, loff_t *pos);
 
 static struct file_operations proc_ops = {
@@ -19,8 +19,6 @@ static struct file_operations proc_ops = {
 int simple_init(void)
 {
        printk(KERN_INFO "Loading Module\n");
-       // printk(KERN_INFO "%lu\n", jiffies);
-       // printk(KERN_INFO "%lu\n", HZ);
        proc_create(PROC_NAME, 0666, NULL, &proc_ops);
 
        return 0;
@@ -29,7 +27,7 @@ int simple_init(void)
 
 void simple_exit(void) {
 	printk(KERN_INFO "Removing Module\n");
-       remove_proc_entry(PROC_NAME, NULL);
+	remove_proc_entry(PROC_NAME, NULL);
 }
 
 module_init( simple_init );
