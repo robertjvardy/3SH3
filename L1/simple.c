@@ -1,14 +1,15 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <linux/hash.h>
-#include <linux/gcd.h>
+#include <linux/jiffies.h>
+#include <linux/proc_fs.h>
+#include <asm/uaccess.h>
 
 int simple_init(void)
 {
        printk(KERN_INFO "Loading Module\n");
-       printk(KERN_INFO "%lu\n", GOLDEN_RATIO_PRIME);
-       printk(KERN_INFO "%lu\n", gcd(3300, 24));
+       printk(KERN_INFO "%lu\n", jiffies);
+       printk(KERN_INFO "%lu\n", HZ);
        return 0;
 }
 
