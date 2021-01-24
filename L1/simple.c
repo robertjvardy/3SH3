@@ -24,3 +24,22 @@ void proc_exit(void)
 {
        remove_proc_entry(PROC_NAME, NULL);
 }
+
+
+ssize_t proc_read(struct file *file, char user *usr_buf, size_t count, loff_t *pos)
+{
+       int rv = 0;
+       char buffer[BUFFER_SIZE];
+       static int completed = 0;
+       if (completed) {
+              completed = 0;
+              return 0;
+       }
+       completed = 1;
+       rv = sprintf(buffer, "Hello World∖n");
+       copy_to_user(usr_buf, buffer, rv);
+       return rv;
+}
+
+module init(proc_init);
+module exit(proc_exit);
