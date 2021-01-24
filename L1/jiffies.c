@@ -1,11 +1,12 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/jiffies.h>
 #include <linux/proc_fs.h>
 #include <asm/uaccess.h>
 
 #define BUFFER_SIZE 128
-#define PROC_NAME "hello"
+#define PROC_NAME "jiffies"
 
 ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos);
 
@@ -26,7 +27,7 @@ void proc_exit(void)
 }
 
 
-ssize_t proc_read(struct file *file, char user *usr_buf, size_t count, loff_t *pos)
+ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos)
 {
        int rv = 0;
        char buffer[BUFFER_SIZE];
@@ -36,10 +37,10 @@ ssize_t proc_read(struct file *file, char user *usr_buf, size_t count, loff_t *p
               return 0;
        }
        completed = 1;
-       rv = sprintf(buffer, "Hello World∖n");
+       rv = sprintf(buffer, "%lu\n", jiffies);
        copy_to_user(usr_buf, buffer, rv);
        return rv;
 }
 
-module init(proc_init);
-module exit(proc_exit);
+module_init(proc_init);
+module_exit(proc_exit);
