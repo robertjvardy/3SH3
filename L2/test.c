@@ -24,7 +24,6 @@ int main()
     else
     { /* parent process */
         /* parent will wait for the child to complete */
-	sleep(10);
         wait(NULL);
         printf("Child Complete\n");
     }

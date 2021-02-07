@@ -9,7 +9,7 @@
 
 int main(void)
 {
-    char write_msg[BUFFER_SIZE] = "Greetings";
+    char write_msg[BUFFER_SIZE] = "Hello";
     char read_msg[BUFFER_SIZE];
     int fd[2];
     pid_t pid;
@@ -32,12 +32,13 @@ int main(void)
         close(fd[READ_END]);
         write(fd[WRITE_END], write_msg, strlen(write_msg) + 1);
         close(fd[WRITE_END]);
+	wait(NULL);
     }
     else
     { /* child process */
         close(fd[WRITE_END]);
         read(fd[READ_END], read_msg, BUFFER_SIZE);
-        printf("read %s", read_msg);
+        printf("%s\n", read_msg);
         close(fd[READ_END]);
     }
     return 0;
