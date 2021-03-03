@@ -53,10 +53,9 @@ void *primes_thread()
         {
             if (is_prime(i))
             {
-                printf("%d, ", i);
+                printf("%d\n", i);
             }
         }
-        printf("\n");
     }
     return 0;
 }
