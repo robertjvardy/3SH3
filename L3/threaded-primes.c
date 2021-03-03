@@ -3,10 +3,9 @@
 #include <pthread.h>
 #include <math.h>
 
-int value;
-
 void *primes_thread();
 int is_prime(int num);
+int value;
 
 int main(int argc, char *argv[])
 {
@@ -29,7 +28,7 @@ int is_prime(int num)
     }
     else
     {
-        for (int i = 3; i <= max; i = i + 1)
+        for (int i = 3; i <= max; i = i + 2)
         {
             if (num % i == 0)
             {
@@ -57,6 +56,7 @@ void *primes_thread()
                 printf("%d, ", i);
             }
         }
+        printf("\n");
     }
     return 0;
 }
