@@ -3,81 +3,79 @@
 #include <pthread.h>
 
 int size;
-float average;
-int minimum;
-int maximum;
+float ave_val;
+int min_val;
+int max_val;
 
-void *thread_function_calculate_average(int nums[]);
-void *thread_function_calculate_maximum(int nums[]);
-void *thread_function_calculate_minimum(int nums[]);
+void *get_ave(int values[]);
+void *get_max(int values[]);
+void *get_min(int values[]);
 
 int main(int argc, char *argv[])
 {
 
-    int nums[argc];
+    int values[argc];
 
     for (int i = 1; i < argc; i++)
     {
-        nums[i - 1] = atoi(argv[i]);
+        values[i - 1] = atoi(argv[i]);
     }
     size = (argc - 1);
 
-    pthread_t thread_calculate_average,
-        thread_calculate_maximum,
-        thread_calculate_minimum;
+    pthread_t average_thread, max_thread, min_thread;
 
-    int ret1 = pthread_create(&thread_calculate_average, NULL,
-                              thread_function_calculate_average, nums);
+    pthread_create(&average_thread, NULL,
+                   get_ave, values);
 
-    int ret2 = pthread_create(&thread_calculate_maximum, NULL,
-                              thread_function_calculate_maximum, nums);
+    pthread_create(&max_thread, NULL,
+                   get_max, values);
 
-    int ret3 = pthread_create(&thread_calculate_minimum, NULL,
-                              thread_function_calculate_minimum, nums);
+    pthread_create(&min_thread, NULL,
+                   get_min, values);
 
-    pthread_join(thread_calculate_average, NULL);
-    pthread_join(thread_calculate_maximum, NULL);
-    pthread_join(thread_calculate_minimum, NULL);
+    pthread_join(average_thread, NULL);
+    pthread_join(max_thread, NULL);
+    pthread_join(min_thread, NULL);
 
-    printf("Average is: %.2f\n", average);
-    printf("Maximum is: %d\n", maximum);
-    printf("Minimum is: %d\n", minimum);
+    printf("Average is: %.2f\n", ave_val);
+    printf("Maximum is: %d\n", max_val);
+    printf("Minimum is: %d\n", min_val);
     return 0;
 }
 
-void *thread_function_calculate_average(int nums[])
+void *get_ave(int values[])
 {
     int sum = 0;
     for (int i = 0; i < size; i++)
     {
-        sum += nums[i];
+        sum += values[i];
     }
-    average = (float)sum / (float)size;
+    ave_val = (float)sum / (float)size;
 
     return 0;
 }
 
-void *thread_function_calculate_minimum(int nums[])
+void *get_min(int values[])
 {
-    minimum = nums[0];
+    min_val = values[0];
     for (int i = 1; i < size; i++)
     {
-        if (minimum > nums[i])
+        if (min_val > values[i])
         {
-            minimum = nums[i];
+            min_val = values[i];
         }
     }
     return 0;
 }
 
-void *thread_function_calculate_maximum(int nums[])
+void *get_max(int values[])
 {
-    maximum = nums[0];
+    max_val = values[0];
     for (int i = 1; i < size; i++)
     {
-        if (maximum < nums[i])
+        if (max_val < values[i])
         {
-            maximum = nums[i];
+            max_val = values[i];
         }
     }
     return 0;
