@@ -5,7 +5,7 @@
 /* define the global variables as instructed */
 float ave;
 int min;
-int max_val;
+int max;
 int size;
 
 void *get_ave(int values[]);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     pthread_join(min_id, NULL);
 
     printf("Average is: %.2f\n", ave);
-    printf("Maximum is: %d\n", max_val);
+    printf("Maximum is: %d\n", max);
     printf("Minimum is: %d\n", min);
     printf("END\n");
 
@@ -70,14 +70,13 @@ void *get_min(int values[])
 
 void *get_max(int values[])
 {
-    max_val = values[0];
+    max = values[0];
     for (int i = 1; i < size; i++)
     {
-        /*if (values[i] > max_val)
+        if (values[i] > max)
         {
-            max_val = values[i];
-        }*/
-        max_val = max(max_val, values[i]);
+            max = values[i];
+        }
     }
     return 0;
 }
