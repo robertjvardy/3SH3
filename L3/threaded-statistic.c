@@ -2,104 +2,82 @@
 #include <stdio.h>
 #include <pthread.h>
 
-int size;
+/* define the global variables as instructed */
 float ave;
 int min;
-int max;
+int max_val;
+int size;
 
-void *get_ave(int nums[]);
-void *get_max(int nums[]);
-void *get_min(int nums[]);
+void *get_ave(int values[]);
+void *get_max(int values[]);
+void *get_min(int values[]);
 
 int main(int argc, char *argv[])
 {
 
-    printf("Statistics Analyzer\n");
     printf("There are %d numbers\n", (argc - 1));
-    int nums[argc];
+    int values[argc];
 
-    for (int i = 1; i < argc; i++)
+    /* read the values from the args passed and add them to the values array */
+    for (int i = 0; i < argc; i++)
     {
-        //printf("%s ", argv[i]);
-        nums[i - 1] = atoi(argv[i]);
+        values[i] = atoi(argv[i + 1]);
     }
+    /* define the size */
     size = (argc - 1);
-    //printf("\n");
-    //printf("%d\n", nums[1] + nums[2]);
 
     pthread_t ave_id, max_id, min_id;
 
-    pthread_create(&ave_id, NULL, get_ave, nums);
-    pthread_create(&max_id, NULL, get_max, nums);
-    pthread_create(&min_id, NULL, get_min, nums);
+    pthread_create(&ave_id, NULL, get_ave, values);
+    pthread_create(&max_id, NULL, get_max, values);
+    pthread_create(&min_id, NULL, get_min, values);
 
     pthread_join(ave_id, NULL);
     pthread_join(max_id, NULL);
     pthread_join(min_id, NULL);
 
     printf("Average is: %.2f\n", ave);
-    printf("Maximum is: %d\n", max);
+    printf("Maximum is: %d\n", max_val);
     printf("Minimum is: %d\n", min);
     printf("END\n");
 
     return 0;
 }
 
-void *get_ave(int nums[])
+void *get_ave(int values[])
 {
-    pthread_t id = pthread_self();
-    //printf("\n");
-
     int sum = 0;
     for (int i = 0; i < size; i++)
     {
-        sum += nums[i];
+        sum += values[i];
     }
     ave = (float)sum / (float)size;
-
-    printf("Thread #%lu finished\n", id);
     return 0;
 }
 
-void *get_min(int nums[])
+void *get_min(int values[])
 {
-    pthread_t id = pthread_self();
-    //int num_list[size] = (int *)parameter;
-
-    //printf("Num: %d\n", nums[1]);
-
-    min = nums[0];
+    min = values[0];
     for (int i = 1; i < size; i++)
     {
-        //printf("%d, ", nums[i]);
-        if (min > nums[i])
+        if (values[i] < min)
         {
-            min = nums[i];
+            min = values[i];
         }
     }
-    //printf("\n");
-    printf("Thread #%lu finished\n", id);
     return 0;
 }
 
-// this function might overflow cuz niggers commit a lot of crime
-void *get_max(int nums[])
+void *get_max(int values[])
 {
-    pthread_t id = pthread_self();
-    //int num_list[size] = (int *)parameter;
-
-    //printf("Num: %d\n", nums[1]);
-
-    max = nums[0];
+    max_val = values[0];
     for (int i = 1; i < size; i++)
     {
-        //printf("%d, ", nums[i]);
-        if (max < nums[i])
+        /*if (values[i] > max_val)
         {
-            max = nums[i];
-        }
+            max_val = values[i];
+        }*/
+        max_val = max(max_val, values[i]);
     }
-    //printf("\n");
-    printf("Thread #%lu finished\n", id);
     return 0;
 }

@@ -42,7 +42,7 @@ int is_prime(int num)
 
 void *primes_thread()
 {
-    printf("Prime numbers less than %d:\n", value);
+    printf("Prime numbers less than or equal to %d:\n", value);
     if (value == 1)
     {
         return 0;
