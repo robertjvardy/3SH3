@@ -46,11 +46,10 @@ void *primes_thread()
     printf("Prime numbers less than %d:\n", value);
     if (value == 1)
     {
-        return 0
+        return 0;
     }
     else
     {
-
         for (int i = 2; i <= value; i++)
         {
             if (is_prime(i))
