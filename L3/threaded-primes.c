@@ -4,7 +4,7 @@
 #include <math.h>
 
 void *primes_thread();
-int is_prime(int num);
+int is_prime(int curr);
 int value;
 
 int main(int argc, char *argv[])
@@ -19,10 +19,10 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-int is_prime(int num)
+int is_prime(int curr)
 {
-    int max = sqrt(num) + 1;
-    if (num % 2 == 0)
+    int max = sqrt(curr) + 1;
+    if (curr % 2 == 0)
     {
         return 0;
     }
@@ -30,7 +30,7 @@ int is_prime(int num)
     {
         for (int i = 3; i <= max; i = i + 2)
         {
-            if (num % i == 0)
+            if (curr % i == 0)
             {
                 return 0;
             }

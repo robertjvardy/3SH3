@@ -23,6 +23,12 @@ int main(int argc, char *argv[])
     }
     size = (argc - 1);
 
+    if (size == 0)
+    {
+        printf("No numbers passed\n");
+        return 0;
+    }
+
     pthread_t average_thread, max_thread, min_thread;
 
     pthread_create(&average_thread, NULL, get_ave, values);
