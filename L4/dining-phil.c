@@ -43,6 +43,7 @@ void *thread_function(int phil_num)
 {
     while (1)
     {
+        int has_fork = 0;
         int randomNumber = rand() % 3;
         printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber);
         sleep(randomNumber);
@@ -50,12 +51,20 @@ void *thread_function(int phil_num)
         pthread_mutex_lock(&mutex);
         if (forks)
         {
-            pthread_cond_wait(&cond, &mutex);
+            /* pthread_cond_wait(&cond, &mutex); */
             forks -= 1;
             pickup_forks(phil_num);
-            return_forks(phil_num);
+            has_fork = 1;
         }
         pthread_mutex_unlock(&mutex);
+
+        if (has_fork)
+        {
+            pthread_mutex_lock(&mutex);
+            forks += 1;
+            return_forks(phil_num);
+            pthread_mutex_unlock(&mutex);
+        }
     }
 
     printf("%d complete!\n", phil_num);
