@@ -5,7 +5,7 @@
 /* The threads will serve as the philosphers */
 #define THREAD_NUM 5
 
-void *thread_function(void *parameter);
+void *thread_function(void *parameter, int phil_num);
 
 int counter = 0;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -21,7 +21,7 @@ int main()
     int ret;
     for (int i = 0; i < THREAD_NUM; i++)
     {
-        ret = pthread_create(&threadId[i], NULL, thread_function, threadName[i]);
+        ret = pthread_create(&threadId[i], NULL, thread_function, threadName[i], i);
         if (ret != 0)
         {
             fprintf(stderr, "Create thread failed!\n");
@@ -39,10 +39,10 @@ int main()
     return 0;
 }
 
-void *thread_function(void *parameter)
+void *thread_function(void *parameter, int phil_num)
 {
     const char *name = (char *)parameter;
-    printf("%s start!\n", name);
+    printf("%s %d start!\n", name, phil_num);
     pthread_mutex_lock(&mutex);
     for (int i = 0; i < 10000; i++)
     {
