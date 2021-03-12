@@ -23,7 +23,7 @@ int main()
         ret = pthread_create(&threadId[i], NULL, thread_function, threadName[i]);
         if (ret != 0)
         {
-            fprint(stderr, "Create thread failed!\n");
+            fprintf(stderr, "Create thread failed!\n");
             return -1;
         }
     }
