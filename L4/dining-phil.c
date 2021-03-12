@@ -50,8 +50,9 @@ void *thread_function(void *parameter)
     }
     pthread_mutex_unlock(&mutex);
 
-    int randomnumber = rand() % 10;
-    printf("%d\n", randomnumber);
+    int randomNumber = rand() % 3;
+    printf("Sleeping for %d seconds\n", randomNumber);
+    sleep(randomNumber);
 
     printf("%s complete!\n", name);
 }
