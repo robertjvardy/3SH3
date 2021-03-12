@@ -12,6 +12,8 @@ void *return_forks(int phil_num);
 int counter = 0;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
+int forks[5] = {1, 1, 1, 1, 1};
+
 int main()
 {
     pthread_t threadId[THREAD_NUM];
@@ -43,8 +45,11 @@ void *thread_function(int phil_num)
     printf("Sleeping for %d seconds\n", randomNumber);
     sleep(randomNumber);
 
-    pickup_forks(phil_num);
-    return_forks(phil_num);
+    if (forks[phil_num])
+    {
+        pickup_forks(phil_num);
+        return_forks(phil_num);
+    }
 
     pthread_mutex_lock(&mutex);
     for (int i = 0; i < 10000; i++)
