@@ -48,7 +48,7 @@ void *thread_function(int phil_num)
         sleep(randomNumber);
 
         pthread_mutex_lock(&mutex);
-        if (!forks)
+        if (forks)
         {
             pthread_cond_wait(&cond, &mutex);
             forks -= 1;
