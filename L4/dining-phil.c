@@ -47,17 +47,13 @@ void *thread_function(int phil_num)
     printf("Sleeping for %d seconds\n", randomNumber);
     sleep(randomNumber);
 
-    if (forks)
+    pthread_mutex_lock(&mutex);
+    while (!forks)
     {
+        pthread_cond_wait(&cond, &mutex);
         forks -= 1;
         pickup_forks(phil_num);
         return_forks(phil_num);
-    }
-
-    pthread_mutex_lock(&mutex);
-    for (int i = 0; i < 10000; i++)
-    {
-        counter++;
     }
     pthread_mutex_unlock(&mutex);
 
