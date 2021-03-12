@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+/* The threads will serve as the philosphers */
 #define THREAD_NUM 5
 
 void *thread_function(void *parameter);
@@ -48,5 +49,9 @@ void *thread_function(void *parameter)
         counter++;
     }
     pthread_mutex_unlock(&mutex);
+
+    int randomnumber = rand() % 10;
+    printf("%d\n", randomnumber);
+
     printf("%s complete!\n", name);
 }
