@@ -44,7 +44,7 @@ void *thread_function(int phil_num)
     while (1)
     {
         int randomNumber = rand() % 3;
-        printf("Sleeping for %d seconds\n", randomNumber);
+        printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber);
         sleep(randomNumber);
 
         pthread_mutex_lock(&mutex);
