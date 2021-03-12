@@ -6,6 +6,8 @@
 #define THREAD_NUM 5
 
 void *thread_function(int phil_num);
+void *pickup_forks(int phil_num);
+void *return_forks(int phil_num);
 
 int counter = 0;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -37,6 +39,13 @@ int main()
 void *thread_function(int phil_num)
 {
     printf("%d start!\n", phil_num);
+    int randomNumber = rand() % 3;
+    printf("Sleeping for %d seconds\n", randomNumber);
+    sleep(randomNumber);
+
+    pickup_forks(phil_num);
+    return_forks(phil_num);
+
     pthread_mutex_lock(&mutex);
     for (int i = 0; i < 10000; i++)
     {
@@ -44,9 +53,15 @@ void *thread_function(int phil_num)
     }
     pthread_mutex_unlock(&mutex);
 
-    int randomNumber = rand() % 3;
-    printf("Sleeping for %d seconds\n", randomNumber);
-    sleep(randomNumber);
-
     printf("%d complete!\n", phil_num);
+}
+
+void *pickup_forks(int phil_num)
+{
+    printf("%d got forks!\n", phil_num);
+}
+
+void *return_forks(int phil_num);
+{
+    printf("%d put forks back!\n", phil_num);
 }
