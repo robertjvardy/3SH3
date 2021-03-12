@@ -12,11 +12,12 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 int main()
 {
     pthread_t threadId[THREAD_NUM];
-    char *threadName[THREAD_NUM] = { "Thread 1",
-                                     "Thread 2",
-                                     "Thread 3",
-                                     "Thread 4",
-                                     "Thread 5" } int ret;
+    char *threadName[THREAD_NUM] = {"Thread 1",
+                                    "Thread 2",
+                                    "Thread 3",
+                                    "Thread 4",
+                                    "Thread 5"};
+    int ret;
     for (int i = 0; i < THREAD_NUM; i++)
     {
         ret = pthread_create(&threadId[i], NULL, thread_function, threadName[i]);
