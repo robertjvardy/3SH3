@@ -35,27 +35,28 @@ int main()
         pthread_join(threadId[i], NULL);
     }
 
-    printf("Final counter = %d\n", counter);
     printf("Main complete\n");
     return 0;
 }
 
 void *thread_function(int phil_num)
 {
-    printf("%d start!\n", phil_num);
-    int randomNumber = rand() % 3;
-    printf("Sleeping for %d seconds\n", randomNumber);
-    sleep(randomNumber);
-
-    pthread_mutex_lock(&mutex);
-    while (!forks)
+    while (1)
     {
-        pthread_cond_wait(&cond, &mutex);
-        forks -= 1;
-        pickup_forks(phil_num);
-        return_forks(phil_num);
+        int randomNumber = rand() % 3;
+        printf("Sleeping for %d seconds\n", randomNumber);
+        sleep(randomNumber);
+
+        pthread_mutex_lock(&mutex);
+        if (!forks)
+        {
+            pthread_cond_wait(&cond, &mutex);
+            forks -= 1;
+            pickup_forks(phil_num);
+            return_forks(phil_num);
+        }
+        pthread_mutex_unlock(&mutex);
     }
-    pthread_mutex_unlock(&mutex);
 
     printf("%d complete!\n", phil_num);
 }
