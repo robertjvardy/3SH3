@@ -61,7 +61,7 @@ void *pickup_forks(int phil_num)
     printf("%d got forks!\n", phil_num);
 }
 
-void *return_forks(int phil_num);
+void *return_forks(int phil_num)
 {
     printf("%d put forks back!\n", phil_num);
 }
