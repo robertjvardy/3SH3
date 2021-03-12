@@ -10,11 +10,8 @@ void *pickup_forks(int phil_num);
 void *return_forks(int phil_num);
 
 int counter = 0;
-pthread_mutex_t mutex;
-pthread_cond_t cond_var;
-
-pthread_mutex_init(&mutex, NULL);
-pthread_cond_init(&cond_var, NULL);
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
 /* int forks[5] = {1, 1, 1, 1, 1}; */
 int forks = 1;
