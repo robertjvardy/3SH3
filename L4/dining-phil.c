@@ -10,9 +10,14 @@ void *pickup_forks(int phil_num);
 void *return_forks(int phil_num);
 
 int counter = 0;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutex;
+pthread_cond_t cond_var;
 
-int forks[5] = {1, 1, 1, 1, 1};
+pthread_mutex_init(&mutex, NULL);
+pthread_cond_init(&cond_var, NULL);
+
+/* int forks[5] = {1, 1, 1, 1, 1}; */
+int forks = 1;
 
 int main()
 {
@@ -45,8 +50,9 @@ void *thread_function(int phil_num)
     printf("Sleeping for %d seconds\n", randomNumber);
     sleep(randomNumber);
 
-    if (forks[phil_num])
+    if (forks)
     {
+        forks -= 1;
         pickup_forks(phil_num);
         return_forks(phil_num);
     }
