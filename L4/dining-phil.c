@@ -83,6 +83,8 @@ void *pickup_forks(int phil_num)
     forks[left] = 0;
     forks[right] = 0;
 
+    printf("Phil %d got forks! ", phil_num);
+
     printf("forks: ");
     for (int i = 0; i < THREAD_NUM; i++)
     {
@@ -90,7 +92,6 @@ void *pickup_forks(int phil_num)
     }
     printf("\n");
 
-    printf("Phil %d got forks!\n", phil_num);
     pthread_mutex_unlock(&mutex);
 }
 
@@ -109,7 +110,15 @@ void *return_forks(int phil_num)
     pthread_mutex_lock(&mutex);
     forks[left] = 1;
     forks[right] = 1;
-    printf("Phil %d put forks back!\n", phil_num);
+    printf("Phil %d put forks back! ", phil_num);
+
+    printf("forks: ");
+    for (int i = 0; i < THREAD_NUM; i++)
+    {
+        printf("%d ", forks[i]);
+    }
+    printf("\n");
+
     pthread_cond_signal(&cond);
     pthread_mutex_unlock(&mutex);
 }
