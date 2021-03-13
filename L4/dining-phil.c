@@ -50,24 +50,22 @@ void *thread_function(int phil_num)
         sleep(randomNumber);
 
         pthread_mutex_lock(&mutex);
-        if (forks)
+        if (!forks)
         {
             pthread_cond_wait(&cond, &mutex);
-            printf("here: %d", phil_num);
-            eat_count++;
-            forks -= 1;
-            pickup_forks(phil_num);
-            has_fork = 1;
         }
+        printf("here: %d", phil_num);
+        eat_count++;
+        forks -= 1;
+        pickup_forks(phil_num);
+        has_fork = 1;
         pthread_mutex_unlock(&mutex);
 
-        if (has_fork)
-        {
-            pthread_mutex_lock(&mutex);
-            forks += 1;
-            return_forks(phil_num);
-            pthread_mutex_unlock(&mutex);
-        }
+        pthread_mutex_lock(&mutex);
+        forks += 1;
+        return_forks(phil_num);
+        pthread_cond_signal(&cond);
+        pthread_mutex_unlock(&mutex);
     }
 
     printf("%d complete!\n", phil_num);
