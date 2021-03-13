@@ -75,9 +75,8 @@ void *pickup_forks(int phil_num)
         right = phil_num + 1;
     }
 
-    if (!(forks[left] && forks[right]))
+    while (!(forks[left] && forks[right]))
     {
-        printf("Phil %d waiting!\n", phil_num);
         pthread_cond_wait(&cond, &mutex);
     }
     forks[left] = 0;
