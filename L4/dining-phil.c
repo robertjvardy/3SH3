@@ -90,6 +90,14 @@ void *pickup_forks(int phil_num)
     }
     forks[left] = 0;
     forks[right] = 0;
+
+    printf("forks: ");
+    for (int i = 0; i < THREAD_NUM; i++)
+    {
+        printf("%d ", forks[i]);
+    }
+    printf("\n");
+
     printf("Phil %d got forks!\n", phil_num);
     pthread_mutex_unlock(&mutex);
 }
