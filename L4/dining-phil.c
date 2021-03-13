@@ -41,7 +41,8 @@ int main()
 
 void *thread_function(int phil_num)
 {
-    while (1)
+    int eat_count = 0;
+    while (eat_count < 5)
     {
         int has_fork = 0;
         int randomNumber = rand() % 3;
@@ -52,6 +53,7 @@ void *thread_function(int phil_num)
         if (forks)
         {
             /* pthread_cond_wait(&cond, &mutex); */
+            eat_count++;
             forks -= 1;
             pickup_forks(phil_num);
             has_fork = 1;
