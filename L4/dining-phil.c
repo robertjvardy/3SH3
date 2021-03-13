@@ -8,13 +8,13 @@
 void *thread_function(int phil_num);
 void *pickup_forks(int phil_num);
 void *return_forks(int phil_num);
+int *are_forks_available(int phil_num);
 
 int counter = 0;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
-/* int forks[5] = {1, 1, 1, 1, 1}; */
-int forks = 1;
+int forks[5] = {1, 1, 1, 1, 1};
 
 int main()
 {
@@ -58,20 +58,60 @@ void *thread_function(int phil_num)
 
 void *pickup_forks(int phil_num)
 {
+
     pthread_mutex_lock(&mutex);
-    if (!forks)
+    int left;
+    int right;
+
+    if (phil_num == 0)
+    {
+        left = 5;
+        right = 1;
+    }
+    else if (phil_num == 0)
+    {
+        left = 4;
+        right = 0;
+    }
+    else
+    {
+        left = phil_num - 1;
+        right = phil_num + 1;
+    }
+
+    if (!(forks[left] && forks[right]))
     {
         pthread_cond_wait(&cond, &mutex);
     }
-    forks -= 1;
+    forks[left] = 0;
+    forks[right] = 0;
     printf("Phil %d got forks!\n", phil_num);
     pthread_mutex_unlock(&mutex);
 }
 
 void *return_forks(int phil_num)
 {
+    int left;
+    int right;
+
+    if (phil_num == 0)
+    {
+        left = 5;
+        right = 1;
+    }
+    else if (phil_num == 0)
+    {
+        left = 4;
+        right = 0;
+    }
+    else
+    {
+        left = phil_num - 1;
+        right = phil_num + 1;
+    }
     pthread_mutex_lock(&mutex);
-    forks += 1;
+    forks[left] = 1;
+    forks[right] = 1;
     printf("Phil %d put forks back!\n", phil_num);
     pthread_cond_signal(&cond);
     pthread_mutex_unlock(&mutex);
