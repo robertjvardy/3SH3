@@ -44,28 +44,13 @@ void *thread_function(int phil_num)
     int eat_count = 0;
     while (eat_count < 5)
     {
-        int has_fork = 0;
-        int randomNumber = rand() % 3;
+        int randomNumber = (rand() % 3) + 1;
         /* printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber); */
         sleep(randomNumber);
 
-        pthread_mutex_lock(&mutex);
-        if (!forks)
-        {
-            pthread_cond_wait(&cond, &mutex);
-        }
-        printf("here: %d", phil_num);
-        eat_count++;
-        forks -= 1;
         pickup_forks(phil_num);
-        has_fork = 1;
-        pthread_mutex_unlock(&mutex);
-
-        pthread_mutex_lock(&mutex);
-        forks += 1;
+        eat_count++;
         return_forks(phil_num);
-        pthread_cond_signal(&cond);
-        pthread_mutex_unlock(&mutex);
     }
 
     printf("%d complete!\n", phil_num);
@@ -73,10 +58,21 @@ void *thread_function(int phil_num)
 
 void *pickup_forks(int phil_num)
 {
+    pthread_mutex_lock(&mutex);
+    if (!forks)
+    {
+        pthread_cond_wait(&cond, &mutex);
+    }
+    forks -= 1;
     printf("Phil %d got forks!\n", phil_num);
+    pthread_mutex_unlock(&mutex);
 }
 
 void *return_forks(int phil_num)
 {
+    pthread_mutex_lock(&mutex);
+    forks += 1;
     printf("Phil %d put forks back!\n", phil_num);
+    pthread_cond_signal(&cond);
+    pthread_mutex_unlock(&mutex);
 }
