@@ -46,7 +46,7 @@ void *thread_function(int phil_num)
     {
         int has_fork = 0;
         int randomNumber = rand() % 3;
-        printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber);
+        /* printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber); */
         sleep(randomNumber);
 
         pthread_mutex_lock(&mutex);
@@ -62,9 +62,6 @@ void *thread_function(int phil_num)
 
         if (has_fork)
         {
-            int eat_time = 3;
-            printf("Phil %d: eating for %d seconds\n", phil_num, eat_time);
-            sleep(eat_time);
             pthread_mutex_lock(&mutex);
             forks += 1;
             return_forks(phil_num);
