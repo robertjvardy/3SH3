@@ -53,6 +53,7 @@ void *thread_function(int phil_num)
         if (forks)
         {
             pthread_cond_wait(&cond, &mutex);
+            printf("here: %d", phil_num);
             eat_count++;
             forks -= 1;
             pickup_forks(phil_num);
