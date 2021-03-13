@@ -53,6 +53,7 @@ void *thread_function(int phil_num)
 
         pickup_forks(phil_num);
         eat_count++;
+        sleep(3);
         return_forks(phil_num);
     }
 
