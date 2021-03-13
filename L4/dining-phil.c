@@ -14,6 +14,10 @@ int counter = 0;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 
+/* 
+    The state of the forks will be represented by the following array
+    1 represents a present fork and 0 means its being used
+ */
 int forks[5] = {1, 1, 1, 1, 1};
 
 int main()
@@ -45,7 +49,6 @@ void *thread_function(int phil_num)
     while (eat_count < 5)
     {
         int randomNumber = (rand() % 3) + 1;
-        /* printf("Phil %d: Sleeping for %d seconds\n", phil_num, randomNumber); */
         sleep(randomNumber);
 
         pickup_forks(phil_num);
@@ -81,6 +84,7 @@ void *pickup_forks(int phil_num)
 
     if (!(forks[left] && forks[right]))
     {
+        printf("Phil %d waiting!\n", phil_num);
         pthread_cond_wait(&cond, &mutex);
     }
     forks[left] = 0;
