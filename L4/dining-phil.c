@@ -52,7 +52,7 @@ void *thread_function(int phil_num)
         pthread_mutex_lock(&mutex);
         if (forks)
         {
-            /* pthread_cond_wait(&cond, &mutex); */
+            pthread_cond_wait(&cond, &mutex);
             eat_count++;
             forks -= 1;
             pickup_forks(phil_num);
