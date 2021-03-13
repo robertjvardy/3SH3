@@ -64,22 +64,14 @@ void *pickup_forks(int phil_num)
 {
 
     pthread_mutex_lock(&mutex);
-    int left;
+    int left = phil_num;
     int right;
-
-    if (phil_num == 0)
+    if (phil_num == 5)
     {
-        left = 5;
-        right = 1;
-    }
-    else if (phil_num == 0)
-    {
-        left = 4;
         right = 0;
     }
     else
     {
-        left = phil_num - 1;
         right = phil_num + 1;
     }
 
@@ -104,22 +96,14 @@ void *pickup_forks(int phil_num)
 
 void *return_forks(int phil_num)
 {
-    int left;
+    int left = phil_num;
     int right;
-
-    if (phil_num == 0)
+    if (phil_num == 5)
     {
-        left = 5;
-        right = 1;
-    }
-    else if (phil_num == 0)
-    {
-        left = 4;
         right = 0;
     }
     else
     {
-        left = phil_num - 1;
         right = phil_num + 1;
     }
     pthread_mutex_lock(&mutex);
