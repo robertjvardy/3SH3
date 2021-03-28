@@ -53,7 +53,8 @@ void *thread_function(int phil_num)
 
         pickup_forks(phil_num);
         eat_count++;
-        sleep(3);
+        /* sleeping for one second to simulate eating time */
+        sleep(1);
         return_forks(phil_num);
     }
 
@@ -63,7 +64,6 @@ void *thread_function(int phil_num)
 void *pickup_forks(int phil_num)
 {
 
-    pthread_mutex_lock(&mutex);
     int left = phil_num;
     int right;
     if (phil_num == 4)
@@ -75,10 +75,12 @@ void *pickup_forks(int phil_num)
         right = phil_num + 1;
     }
 
+    pthread_mutex_lock(&mutex);
     while (!(forks[left] && forks[right]))
     {
         pthread_cond_wait(&cond, &mutex);
     }
+
     forks[left] = 0;
     forks[right] = 0;
 
@@ -90,7 +92,6 @@ void *pickup_forks(int phil_num)
         printf("%d ", forks[i]);
     }
     printf("\n");
-
     pthread_mutex_unlock(&mutex);
 }
 
@@ -106,9 +107,11 @@ void *return_forks(int phil_num)
     {
         right = phil_num + 1;
     }
+
     pthread_mutex_lock(&mutex);
     forks[left] = 1;
     forks[right] = 1;
+
     printf("Phil %d put forks back! ", phil_num);
 
     printf("forks: ");
