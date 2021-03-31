@@ -69,25 +69,20 @@ void schedule()
  */
 Task *pickNextTask()
 {
-    Task *hp = head->task;
+    Task *nextTask = tmp->task;
 
     if (tmp->next == NULL)
-    {
         tmp = head;
-    }
     else
     {
         while (tmp != NULL)
         {
-            if (tmp->task->priority >= hp->priority)
-            {
-                hp = tmp->task;
-                tmp = tmp->next;
-                return hp;
-            }
+            if (tmp->task->priority > nextTask->priority)
+                nextTask = tmp->task;
+
             tmp = tmp->next;
         }
     }
 
-    return hp;
+    return nextTask;
 }
