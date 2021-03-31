@@ -84,6 +84,8 @@ Task *pickNextTask()
 
     int highest = hp->priority;
 
+    printf("Highest %d\n", highest);
+
     if (tmp->next == NULL)
         tmp = head;
     else
