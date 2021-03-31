@@ -81,10 +81,11 @@ Task *pickNextTask()
     {
         while (temp != NULL)
         {
-            printf("Name: %s, Priority: %d\n", temp->task->name, temp->task->priority);
             if (temp->task->priority >= hp->priority)
+            {
                 hp = temp->task;
-
+                return hp;
+            }
             temp = temp->next;
         }
     }
