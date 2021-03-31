@@ -16,31 +16,33 @@ struct node *head = NULL;
 Task *pickNextTask();
 
 // add a new task to the list of tasks
-void add(char *name, int priority, int burst) {
+void add(char *name, int priority, int burst)
+{
     // first create the new task
-    Task *newTask = (Task *) malloc(sizeof(Task));
+    Task *newTask = (Task *)malloc(sizeof(Task));
 
     newTask->name = name;
     newTask->priority = priority;
     newTask->burst = burst;
 
-    // insert the new task into the list of tasks 
+    // insert the new task into the list of tasks
     insert(&head, newTask);
 }
 
 /**
  * Run the priority scheduler
  */
-void schedule() 
+void schedule()
 {
     Task *current;
 
-    while (head != NULL) {
+    while (head != NULL)
+    {
         current = pickNextTask();
 
-        run(current,current->burst);
+        run(current, current->burst);
 
-        delete(&head, current);
+        delete (&head, current);
     }
 }
 
@@ -49,11 +51,12 @@ void schedule()
  */
 Task *pickNextTask()
 {
-struct node *temp;
-Task *hp = head->task;
-temp = head->next;
+    struct node *temp;
+    Task *hp = head->task;
+    temp = head->next;
 
-    while (temp != NULL) {
+    while (temp != NULL)
+    {
         if (temp->task->priority > hp->priority)
             hp = temp->task;
 

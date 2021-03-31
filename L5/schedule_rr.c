@@ -20,44 +20,47 @@ struct node *tmp;
 Task *pickNextTask();
 
 // add a new task to the list of tasks
-void add(char *name, int priority, int burst) {
+void add(char *name, int priority, int burst)
+{
     // first create the new task
-    Task *newTask = (Task *) malloc(sizeof(Task));
+    Task *newTask = (Task *)malloc(sizeof(Task));
 
     newTask->name = name;
     newTask->priority = priority;
     newTask->burst = burst;
 
-    // insert the new task into the list of tasks 
+    // insert the new task into the list of tasks
     insert(&head, newTask);
 }
 
 /**
  * Run the priority scheduler
  */
-void schedule() 
+void schedule()
 {
     Task *current;
 
     tmp = head;
 
-    while (head != NULL) {
+    while (head != NULL)
+    {
         current = pickNextTask();
 
-        if (current->burst > QUANTUM) {
+        if (current->burst > QUANTUM)
+        {
             run(current, QUANTUM);
 
             current->burst -= QUANTUM;
         }
-        else {
+        else
+        {
             run(current, current->burst);
-            
+
             current->burst = 0;
 
-            printf("Task %s finished.\n",current->name);        
-            delete(&head, current);
+            printf("Task %s finished.\n", current->name);
+            delete (&head, current);
         }
-
     }
 }
 

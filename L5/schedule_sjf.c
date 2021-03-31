@@ -1,21 +1,17 @@
 /**
  * Implementation of various scheduling algorithms.
  *
- * FCFS scheduling
+ * Shortest Job scheduling
  */
-
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 
 #include "task.h"
 #include "list.h"
 #include "cpu.h"
 
-// reference to the head of the list
 struct node *head = NULL;
-
-// sequence counter of next available thread identifier
-int nextTid = 0;
 
 Task *pickNextTask();
 
@@ -26,7 +22,6 @@ void add(char *name, int priority, int burst)
     Task *newTask = (Task *)malloc(sizeof(Task));
 
     newTask->name = name;
-    newTask->tid = nextTid++;
     newTask->priority = priority;
     newTask->burst = burst;
 
@@ -35,14 +30,11 @@ void add(char *name, int priority, int burst)
 }
 
 /**
- * Run the FCFS scheduler
+ * Run the shortest job scheduler
  */
 void schedule()
 {
     Task *current;
-
-    // sanity checker
-    traverse(head);
 
     while (head != NULL)
     {
@@ -59,5 +51,17 @@ void schedule()
  */
 Task *pickNextTask()
 {
-    return head->task;
+    struct node *temp;
+    Task *hp = head->task;
+    temp = head->next;
+
+    while (temp != NULL)
+    {
+        if (temp->task->burst < hp->burst)
+            hp = temp->task;
+
+        temp = temp->next;
+    }
+
+    return hp;
 }
