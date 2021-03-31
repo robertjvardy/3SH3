@@ -98,7 +98,10 @@ Task *pickNextTask()
         if (nextTask->priority == highest)
             return nextTask;
         else
+        {
+            tmp = tmp->next;
             return pickNextTask();
+        }
     }
 
     return nextTask;
