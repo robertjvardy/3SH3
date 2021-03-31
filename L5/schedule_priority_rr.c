@@ -75,9 +75,14 @@ Task *pickNextTask()
 
     if (tmp->next == NULL)
         tmp = head;
-    else if (temp->task->priority >= hp->priority)
-        hp = temp->task;
-    temp = temp->next;
+    else
+    {
+        if (temp->task->priority >= hp->priority)
+        {
+            hp = temp->task;
+        }
+        temp = temp->next;
+    }
 
     return hp;
 }
