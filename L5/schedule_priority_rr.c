@@ -93,7 +93,14 @@ Task *pickNextTask()
     if (tmp->next == NULL)
     {
         tmp = head;
-        return pickNextTask();
+        if (nextTask->priority == highest)
+        {
+            return nextTask;
+        }
+        else
+        {
+            return pickNextTask();
+        }
     }
     else
     {
