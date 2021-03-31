@@ -95,7 +95,10 @@ Task *pickNextTask()
     */
 
     if (tmp->next == NULL)
+    {
         tmp = head;
+        return pickNextTask();
+    }
     else
     {
         /*
@@ -112,6 +115,4 @@ Task *pickNextTask()
             return pickNextTask();
         }
     }
-
-    return nextTask;
 }
