@@ -69,9 +69,7 @@ void schedule()
  */
 Task *pickNextTask()
 {
-    struct node *temp;
     Task *hp = head->task;
-    temp = head->next;
 
     if (tmp->next == NULL)
     {
@@ -79,16 +77,15 @@ Task *pickNextTask()
     }
     else
     {
-        while (temp != NULL)
+        while (tmp != NULL)
         {
-            printf("Name: %s, Priority: %d\n", temp->task->name, temp->task->priority);
-            if (temp->task->priority >= hp->priority)
+            if (tmp->task->priority >= hp->priority)
             {
-                hp = temp->task;
-                temp = temp->next;
+                hp = tmp->task;
+                tmp = tmp->next;
                 return hp;
             }
-            temp = temp->next;
+            tmp = tmp->next;
         }
     }
 
