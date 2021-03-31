@@ -102,6 +102,8 @@ Task *pickNextTask()
          */
         tmp = tmp->next;
 
+        printf("Current Priority: [%d], Highest Priority: [%d], eq: [%d]\n", nextTask->priority, highest, nextTask->priority - highest);
+
         if (nextTask->priority == highest)
         {
             return nextTask;
