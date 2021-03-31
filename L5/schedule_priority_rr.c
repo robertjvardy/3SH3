@@ -83,12 +83,14 @@ Task *pickNextTask()
     }
 
     int highest = hp->priority;
-
+    /*
     printf("Highest: %d\n", highest);
-
+    */
     Task *nextTask = tmp->task;
 
+    /*
     printf("Current = [%s] [%d] [%d]\n", nextTask->name, nextTask->priority, nextTask->burst);
+    */
 
     if (tmp->next == NULL)
     {
@@ -108,9 +110,9 @@ Task *pickNextTask()
         printf("Next: %d\n", nextTask->priority);
          */
         tmp = tmp->next;
-
+        /*
         printf("Current Priority: [%d], Highest Priority: [%d], eq: [%d]\n", nextTask->priority, highest, nextTask->priority - highest);
-
+        */
         if (nextTask->priority == highest)
         {
             return nextTask;
