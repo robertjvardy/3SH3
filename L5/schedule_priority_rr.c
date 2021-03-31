@@ -91,7 +91,7 @@ Task *pickNextTask()
         while (1)
         {
             if (tmp->task->priority == highest)
-                return tmp;
+                return tmp->task;
 
             if (tmp->next == NULL)
             {
