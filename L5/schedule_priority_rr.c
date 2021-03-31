@@ -90,9 +90,7 @@ Task *pickNextTask()
 
     Task *nextTask = tmp->task;
 
-    /*
     printf("Current = [%s] [%d] [%d]\n", nextTask->name, nextTask->priority, nextTask->burst);
-    */
 
     if (tmp->next == NULL)
     {
