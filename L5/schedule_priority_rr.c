@@ -69,23 +69,25 @@ void schedule()
  */
 Task *pickNextTask()
 {
-    Task *nextTask = tmp->task;
-
     struct node *temp;
-    temp = tmp->task;
+    Task *hp = tmp->task;
+    temp = tmp;
 
     if (tmp->next == NULL)
+    {
         tmp = head;
+        temp = head->next;
+    }
     else
     {
         while (temp != NULL)
         {
-            if (temp->task->priority > nextTask->priority)
-                nextTask = temp->task;
+            if (temp->task->priority >= hp->priority)
+                hp = temp->task;
 
             temp = temp->next;
         }
     }
 
-    return nextTask;
+    return hp;
 }
