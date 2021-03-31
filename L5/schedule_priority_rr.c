@@ -71,16 +71,19 @@ Task *pickNextTask()
 {
     Task *nextTask = tmp->task;
 
+    struct node *temp;
+    temp = tmp->task;
+
     if (tmp->next == NULL)
         tmp = head;
     else
     {
-        while (tmp != NULL)
+        while (temp != NULL)
         {
-            if (tmp->task->priority > nextTask->priority)
-                nextTask = tmp->task;
+            if (temp->task->priority > nextTask->priority)
+                nextTask = temp->task;
 
-            tmp = tmp->next;
+            temp = temp->next;
         }
     }
 
