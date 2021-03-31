@@ -69,20 +69,39 @@ void schedule()
  */
 Task *pickNextTask()
 {
+
     struct node *temp;
-    Task *hp = tmp->task;
-    temp = tmp->next;
+    Task *hp = head->task;
+    temp = head->next;
 
-    while (1)
+    while (temp != NULL)
     {
-        if (temp->task->priority >= hp->priority)
-        {
+        if (temp->task->priority > hp->priority)
             hp = temp->task;
-            return hp;
-        }
 
-        if (temp->next == NULL)
-            temp = head;
         temp = temp->next;
+    }
+
+    int highest = hp->priority;
+
+    if (tmp->next == NULL)
+        tmp = head;
+    else
+    {
+        while (1)
+        {
+            if (tmp->task->priority == highest)
+                return tmp;
+
+            if (tmp->next == NULL)
+            {
+                tmp = head;
+                printf("Back to head: Task %s\n", tmp->task->name);
+            }
+            else
+            {
+                tmp = tmp->next;
+            }
+        }
     }
 }
