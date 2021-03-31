@@ -84,26 +84,17 @@ Task *pickNextTask()
 
     int highest = hp->priority;
 
-    printf("Highest %d\n", highest);
+    Task *nextTask = tmp->task;
 
     if (tmp->next == NULL)
         tmp = head;
     else
     {
-        while (1)
-        {
-            if (tmp->task->priority == highest)
-                return tmp->task;
-
-            if (tmp->next == NULL)
-            {
-                tmp = head;
-                printf("Back to head: Task %s\n", tmp->task->name);
-            }
-            else
-            {
-                tmp = tmp->next;
-            }
-        }
+        if (nextTask->priority == highest)
+            return nextTask;
+        else
+            return pickNextTask();
     }
+
+    return nextTask;
 }
